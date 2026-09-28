@@ -1,0 +1,39 @@
+{
+  "name": "site-dra-sara-michelon",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build --webpack",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "sanity": "sanity dev",
+    "seed:sanity": "node --experimental-strip-types scripts/seed-sanity.ts",
+    "qa:content": "node --experimental-strip-types scripts/qa-content.ts"
+  },
+  "dependencies": {
+    "@portabletext/react": "^4.0.3",
+    "@sanity/image-url": "^2.1.1",
+    "@sanity/vision": "6.12.0",
+    "next": "16.3.4",
+    "next-sanity": "13.3.2",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "sanity": "6.12.0",
+    "styled-components": "^6.1.19"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "^24.3.0",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "eslint": "^9.39.2",
+    "eslint-config-next": "16.3.4",
+    "postcss": "^8.5.6",
+    "tailwindcss": "4.3.3",
+    "typescript": "^6.0.3"
+  },
+  "packageManager": "pnpm@11.19.0"
+}

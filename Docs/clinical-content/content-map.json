@@ -1,0 +1,530 @@
+{
+  "source": {
+    "file": "site novo 2026.docx",
+    "normalized_full_source": "source/site-novo-2026-full.md",
+    "route_count": 26,
+    "rules": "README.md"
+  },
+  "status_counts": {
+    "ready_for_merge": 12,
+    "partial_needs_existing_content": 7,
+    "reference_only_do_not_replace": 6,
+    "no_source_do_not_change": 1
+  },
+  "routes": {
+    "facetas-de-resina": {
+      "title": "Facetas e Lentes em Resina",
+      "area": "Odontologia",
+      "file": "routes/facetas-de-resina.md",
+      "source_file": "site novo 2026.docx",
+      "source_coverage": "dedicated_section",
+      "content_status": "ready_for_merge",
+      "merge_strategy": "merge_selective",
+      "source_pages": "1–5",
+      "source_sections": [
+        "Facetas e Lentes em Resina"
+      ],
+      "related_routes": [
+        "lentes-de-contato-dental",
+        "ortodontia",
+        "cirurgia-gengival",
+        "clareamento-dental",
+        "fechamento-de-diastemas"
+      ],
+      "notes": ""
+    },
+    "lentes-de-contato-dental": {
+      "title": "Facetas e Lentes de Porcelana",
+      "area": "Odontologia",
+      "file": "routes/lentes-de-contato-dental.md",
+      "source_file": "site novo 2026.docx",
+      "source_coverage": "dedicated_section",
+      "content_status": "ready_for_merge",
+      "merge_strategy": "merge_selective",
+      "source_pages": "5–10",
+      "source_sections": [
+        "Facetas e Lentes de Porcelana"
+      ],
+      "related_routes": [
+        "facetas-de-resina",
+        "reabilitacao-oral",
+        "ortodontia",
+        "clareamento-dental",
+        "bruxismo"
+      ],
+      "notes": "A rota atual pode permanecer /lentes-de-contato-dental; o documento usa a nomenclatura clínica “Facetas e Lentes de Porcelana”."
+    },
+    "implantes-dentarios": {
+      "title": "Implantes Dentários",
+      "area": "Odontologia",
+      "file": "routes/implantes-dentarios.md",
+      "source_file": "site novo 2026.docx",
+      "source_coverage": "shared_section",
+      "content_status": "ready_for_merge",
+      "merge_strategy": "merge_selective",
+      "source_pages": "10–15",
+      "source_sections": [
+        "Implantes Dentários e Prótese Protocolo",
+        "O que são implantes dentários?",
+        "Como é feito o planejamento?",
+        "É possível colocar dentes fixos logo após os implantes?",
+        "Como funciona o tratamento?",
+        "Dúvidas frequentes"
+      ],
+      "related_routes": [
+        "protese-protocolo",
+        "enxerto-osseo-dentario",
+        "reabilitacao-oral",
+        "periodontia"
+      ],
+      "notes": "O DOCX trata Implantes e Prótese Protocolo em uma página conjunta. Este arquivo separa apenas os trechos diretamente aplicáveis a Implantes e mantém os blocos compartilhados de planejamento/manutenção."
+    },
+    "protese-protocolo": {
+      "title": "Prótese Protocolo",
+      "area": "Odontologia",
+      "file": "routes/protese-protocolo.md",
+      "source_file": "site novo 2026.docx",
+      "source_coverage": "shared_section",
+      "content_status": "ready_for_merge",
+      "merge_strategy": "merge_selective",
+      "source_pages": "10–15",
+      "source_sections": [
+        "Implantes Dentários e Prótese Protocolo",
+        "Prótese protocolo: uma opção fixa para quem perdeu todos ou quase todos os dentes",
+        "Como é feito o planejamento?",
+        "Como funciona o tratamento?",
+        "Dúvidas frequentes"
+      ],
+      "related_routes": [
+        "implantes-dentarios",
+        "enxerto-osseo-dentario",
+        "reabilitacao-oral",
+        "proteses-dentarias"
+      ],
+      "notes": "Conteúdo extraído da página conjunta de Implantes + Prótese Protocolo; não duplicar integralmente a mesma copy nas duas páginas públicas."
+    },
+    "enxerto-osseo-dentario": {
+      "title": "Enxerto Ósseo para Implantes",
+      "area": "Odontologia",
+      "file": "routes/enxerto-osseo-dentario.md",
+      "source_file": "site novo 2026.docx",
+      "source_coverage": "subsection",
+      "content_status": "partial_needs_existing_content",
+      "merge_strategy": "enrich_from_source",
+      "source_pages": "12–14",
+      "source_sections": [
+        "E quando não há osso suficiente?",
+        "Preciso fazer enxerto ósseo?"
+      ],
+      "related_routes": [
+        "implantes-dentarios",
+        "protese-protocolo"
+      ],
+      "notes": "O DOCX não contém uma página independente de enxerto ósseo. Usar estes trechos como complemento, não como substituição completa da página atual."
+    },
+    "periodontia": {
+      "title": "Periodontia",
+      "area": "Odontologia",
+      "file": "routes/periodontia.md",
+      "source_file": "site novo 2026.docx",
+      "source_coverage": "shared_section",
+      "content_status": "ready_for_merge",
+      "merge_strategy": "merge_selective",
+      "source_pages": "15–20",
+      "source_sections": [
+        "Periodontia e Cirurgia Gengival",
+        "Gengiva sangrando ou inflamada: quando procurar avaliação?",
+        "Como é feito o tratamento da periodontite?",
+        "O tratamento periodontal precisa de manutenção",
+        "E quem já possui implantes?",
+        "Dúvidas frequentes"
+      ],
+      "related_routes": [
+        "cirurgia-gengival",
+        "manutencao-odontologica",
+        "implantes-dentarios"
+      ],
+      "notes": "O documento começa com uma página combinada de Periodontia e Cirurgia Gengival; este arquivo preserva o núcleo periodontal e as FAQs correspondentes."
+    },
+    "cirurgia-gengival": {
+      "title": "Cirurgia Gengival",
+      "area": "Odontologia",
+      "file": "routes/cirurgia-gengival.md",
+      "source_file": "site novo 2026.docx",
+      "source_coverage": "dedicated_section",
+      "content_status": "ready_for_merge",
+      "merge_strategy": "merge_selective",
+      "source_pages": "18–20",
+      "source_sections": [
+        "Cirurgia Gengival",
+        "Gengivoplastia e aumento de coroa clínica",
+        "Sorriso gengival",
+        "Retração gengival e enxertos",
+        "E antes de fazer facetas?",
+        "Dúvidas frequentes"
+      ],
+      "related_routes": [
+        "periodontia",
+        "facetas-de-resina",
+        "lentes-de-contato-dental"
+      ],
+      "notes": ""
+    },
+    "ortodontia": {
+      "title": "Ortodontia | Aparelhos Dentários e Alinhadores Transparentes",
+      "area": "Odontologia",
+      "file": "routes/ortodontia.md",
+      "source_file": "site novo 2026.docx",
+      "source_coverage": "dedicated_section",
+      "content_status": "ready_for_merge",
+      "merge_strategy": "merge_selective",
+      "source_pages": "21–25",
+      "source_sections": [
+        "Ortodontia | Aparelhos Dentários e Alinhadores Transparentes"
+      ],
+      "related_routes": [
+        "invisalign",
+        "facetas-de-resina",
+        "lentes-de-contato-dental"
+      ],
+      "notes": ""
+    },
+    "invisalign": {
+      "title": "Invisalign® e Alinhadores Transparentes",
+      "area": "Odontologia",
+      "file": "routes/invisalign.md",
+      "source_file": "site novo 2026.docx",
+      "source_coverage": "subsection",
+      "content_status": "partial_needs_existing_content",
+      "merge_strategy": "enrich_from_source",
+      "source_pages": "21–25",
+      "source_sections": [
+        "Alinhadores transparentes",
+        "Como é feito o planejamento ortodôntico?",
+        "Dúvidas frequentes sobre alinhadores"
+      ],
+      "related_routes": [
+        "ortodontia"
+      ],
+      "notes": "O documento não cria uma página exclusiva de Invisalign®. Ele afirma que Invisalign® é uma das marcas de alinhadores transparentes. Preservar essa distinção na página pública."
+    },
+    "extracao-de-siso": {
+      "title": "Extração de Sisos",
+      "area": "Odontologia",
+      "file": "routes/extracao-de-siso.md",
+      "source_file": "site novo 2026.docx",
+      "source_coverage": "dedicated_section",
+      "content_status": "ready_for_merge",
+      "merge_strategy": "merge_selective",
+      "source_pages": "25–27",
+      "source_sections": [
+        "EXTRAÇÃO DE SISOS"
+      ],
+      "related_routes": [],
+      "notes": ""
+    },
+    "bruxismo": {
+      "title": "Bruxismo, DTM e Dor Orofacial",
+      "area": "Odontologia",
+      "file": "routes/bruxismo.md",
+      "source_file": "site novo 2026.docx",
+      "source_coverage": "dedicated_section",
+      "content_status": "ready_for_merge",
+      "merge_strategy": "merge_selective",
+      "source_pages": "28–29",
+      "source_sections": [
+        "BRUXISMO"
+      ],
+      "related_routes": [],
+      "notes": "O título de rota inclui DTM/Dor Orofacial para refletir o escopo descrito no conteúdo, embora o cabeçalho do DOCX seja “BRUXISMO”."
+    },
+    "tratamento-de-canal": {
+      "title": "Tratamento de Canal",
+      "area": "Odontologia",
+      "file": "routes/tratamento-de-canal.md",
+      "source_file": "site novo 2026.docx",
+      "source_coverage": "dedicated_section",
+      "content_status": "ready_for_merge",
+      "merge_strategy": "merge_selective",
+      "source_pages": "29–32",
+      "source_sections": [
+        "TRATAMENTO DE CANAL"
+      ],
+      "related_routes": [
+        "reabilitacao-oral"
+      ],
+      "notes": ""
+    },
+    "reabilitacao-oral": {
+      "title": "Reabilitação Oral",
+      "area": "Odontologia",
+      "file": "routes/reabilitacao-oral.md",
+      "source_file": "site novo 2026.docx",
+      "source_coverage": "dedicated_section",
+      "content_status": "ready_for_merge",
+      "merge_strategy": "merge_selective",
+      "source_pages": "33–38",
+      "source_sections": [
+        "REABILITAÇÃO ORAL"
+      ],
+      "related_routes": [
+        "implantes-dentarios",
+        "proteses-dentarias",
+        "protese-protocolo",
+        "periodontia",
+        "tratamento-de-canal",
+        "ortodontia",
+        "lentes-de-contato-dental",
+        "inlays-onlays"
+      ],
+      "notes": "O documento pede explicitamente cards de tratamentos relacionados sem dar impressão de pacote. Preservar essa regra na implementação."
+    },
+    "harmonizacao-facial": {
+      "title": "Harmonização Facial",
+      "area": "Estética Orofacial",
+      "file": "routes/harmonizacao-facial.md",
+      "source_file": "site novo 2026.docx",
+      "source_coverage": "dedicated_hub",
+      "content_status": "ready_for_merge",
+      "merge_strategy": "merge_selective",
+      "source_pages": "38–44",
+      "source_sections": [
+        "HARMONIZAÇÃO FACIAL",
+        "O TRATAMENTO É PLANEJADO EM ETAPAS",
+        "REESTRUTURAÇÃO FACIAL E FULL FACE",
+        "HARMONIZAÇÃO FACIAL TEM LIMITES",
+        "DÚVIDAS FREQUENTES"
+      ],
+      "related_routes": [
+        "preenchimento-facial",
+        "preenchimento-labial",
+        "perfiloplastia",
+        "botox",
+        "bioestimuladores-de-colageno"
+      ],
+      "notes": "O DOCX funciona como hub e também contém resumos dos procedimentos filhos. Não publicar o mesmo texto integral no hub e nas páginas filhas; usar o hub para contexto e links."
+    },
+    "preenchimento-facial": {
+      "title": "Preenchimento Facial com Ácido Hialurônico",
+      "area": "Estética Orofacial",
+      "file": "routes/preenchimento-facial.md",
+      "source_file": "site novo 2026.docx",
+      "source_coverage": "subsection",
+      "content_status": "partial_needs_existing_content",
+      "merge_strategy": "enrich_from_source",
+      "source_pages": "40–43",
+      "source_sections": [
+        "PREENCHIMENTO FACIAL COM ÁCIDO HIALURÔNICO",
+        "Dúvidas frequentes relacionadas a preenchimento"
+      ],
+      "related_routes": [
+        "harmonizacao-facial",
+        "preenchimento-labial",
+        "perfiloplastia"
+      ],
+      "notes": "Subseção dentro de Harmonização Facial; complementar a página existente, não substituir automaticamente todo o conteúdo."
+    },
+    "preenchimento-labial": {
+      "title": "Preenchimento Labial",
+      "area": "Estética Orofacial",
+      "file": "routes/preenchimento-labial.md",
+      "source_file": "site novo 2026.docx",
+      "source_coverage": "subsection",
+      "content_status": "partial_needs_existing_content",
+      "merge_strategy": "enrich_from_source",
+      "source_pages": "41–43",
+      "source_sections": [
+        "PREENCHIMENTO LABIAL",
+        "FAQ: Quanto tempo dura o preenchimento labial?"
+      ],
+      "related_routes": [
+        "harmonizacao-facial",
+        "preenchimento-facial"
+      ],
+      "notes": ""
+    },
+    "perfiloplastia": {
+      "title": "Perfiloplastia",
+      "area": "Estética Orofacial",
+      "file": "routes/perfiloplastia.md",
+      "source_file": "site novo 2026.docx",
+      "source_coverage": "subsection",
+      "content_status": "partial_needs_existing_content",
+      "merge_strategy": "enrich_from_source",
+      "source_pages": "41",
+      "source_sections": [
+        "PERFILOPLASTIA"
+      ],
+      "related_routes": [
+        "harmonizacao-facial",
+        "preenchimento-facial"
+      ],
+      "notes": ""
+    },
+    "botox": {
+      "title": "Toxina Botulínica",
+      "area": "Estética Orofacial",
+      "file": "routes/botox.md",
+      "source_file": "site novo 2026.docx",
+      "source_coverage": "subsection",
+      "content_status": "partial_needs_existing_content",
+      "merge_strategy": "enrich_from_source",
+      "source_pages": "41",
+      "source_sections": [
+        "TOXINA BOTULÍNICA"
+      ],
+      "related_routes": [
+        "harmonizacao-facial"
+      ],
+      "notes": "O documento usa a nomenclatura “Toxina Botulínica”. A rota pública pode continuar /botox, mas a copy clínica deve preservar a terminologia do documento."
+    },
+    "bioestimuladores-de-colageno": {
+      "title": "Bioestimuladores de Colágeno",
+      "area": "Estética Orofacial",
+      "file": "routes/bioestimuladores-de-colageno.md",
+      "source_file": "site novo 2026.docx",
+      "source_coverage": "subsection",
+      "content_status": "partial_needs_existing_content",
+      "merge_strategy": "enrich_from_source",
+      "source_pages": "42–43",
+      "source_sections": [
+        "BIOESTIMULADORES DE COLÁGENO",
+        "FAQs relacionadas a bioestimuladores"
+      ],
+      "related_routes": [
+        "harmonizacao-facial"
+      ],
+      "notes": ""
+    },
+    "clareamento-dental": {
+      "title": "Clareamento Dental",
+      "area": "Odontologia",
+      "file": "routes/clareamento-dental.md",
+      "source_file": "site novo 2026.docx",
+      "source_coverage": "references_only",
+      "content_status": "reference_only_do_not_replace",
+      "merge_strategy": "do_not_overwrite_from_this_doc",
+      "source_pages": "3, 9",
+      "source_sections": [
+        "Nem todo sorriso precisa de facetas",
+        "Antes de escolher as facetas, escolha o planejamento"
+      ],
+      "related_routes": [
+        "facetas-de-resina",
+        "lentes-de-contato-dental"
+      ],
+      "notes": "Não há página clínica de Clareamento Dental no DOCX. Usar apenas como referência de relacionamento entre tratamentos."
+    },
+    "fechamento-de-diastemas": {
+      "title": "Fechamento de Diastemas",
+      "area": "Odontologia",
+      "file": "routes/fechamento-de-diastemas.md",
+      "source_file": "site novo 2026.docx",
+      "source_coverage": "references_only",
+      "content_status": "reference_only_do_not_replace",
+      "merge_strategy": "do_not_overwrite_from_this_doc",
+      "source_pages": "1–2",
+      "source_sections": [
+        "Facetas e Lentes em Resina"
+      ],
+      "related_routes": [
+        "facetas-de-resina"
+      ],
+      "notes": "O DOCX menciona fechamento de espaços como possível indicação de facetas em resina, mas não contém conteúdo independente sobre fechamento de diastemas."
+    },
+    "proteses-dentarias": {
+      "title": "Próteses Dentárias",
+      "area": "Odontologia",
+      "file": "routes/proteses-dentarias.md",
+      "source_file": "site novo 2026.docx",
+      "source_coverage": "references_only",
+      "content_status": "reference_only_do_not_replace",
+      "merge_strategy": "do_not_overwrite_from_this_doc",
+      "source_pages": "33–38",
+      "source_sections": [
+        "REABILITAÇÃO ORAL",
+        "UM PLANEJAMENTO PODE ENVOLVER DIFERENTES TRATAMENTOS"
+      ],
+      "related_routes": [
+        "reabilitacao-oral",
+        "protese-protocolo"
+      ],
+      "notes": "Próteses são citadas dentro de Reabilitação Oral, mas o DOCX não oferece uma página clínica autônoma de Próteses Dentárias."
+    },
+    "inlays-onlays": {
+      "title": "Inlays e Onlays / Restaurações Indiretas",
+      "area": "Odontologia",
+      "file": "routes/inlays-onlays.md",
+      "source_file": "site novo 2026.docx",
+      "source_coverage": "references_only",
+      "content_status": "reference_only_do_not_replace",
+      "merge_strategy": "do_not_overwrite_from_this_doc",
+      "source_pages": "34–36",
+      "source_sections": [
+        "REABILITAÇÃO ORAL NÃO É UM ÚNICO PROCEDIMENTO",
+        "UM PLANEJAMENTO PODE ENVOLVER DIFERENTES TRATAMENTOS"
+      ],
+      "related_routes": [
+        "reabilitacao-oral"
+      ],
+      "notes": "O DOCX fala genericamente em restaurações indiretas em porcelana/restaurações e coroas; não há conteúdo específico de Inlays/Onlays."
+    },
+    "manutencao-odontologica": {
+      "title": "Manutenção e Acompanhamento Odontológico",
+      "area": "Odontologia",
+      "file": "routes/manutencao-odontologica.md",
+      "source_file": "site novo 2026.docx",
+      "source_coverage": "references_only",
+      "content_status": "reference_only_do_not_replace",
+      "merge_strategy": "do_not_overwrite_from_this_doc",
+      "source_pages": "4, 8, 13, 17, 24",
+      "source_sections": [
+        "Manutenção das facetas em resina",
+        "Porcelana também precisa de manutenção",
+        "O tratamento termina quando a prótese é instalada?",
+        "O tratamento periodontal precisa de manutenção",
+        "E depois que os dentes estão alinhados?"
+      ],
+      "related_routes": [
+        "facetas-de-resina",
+        "lentes-de-contato-dental",
+        "implantes-dentarios",
+        "periodontia",
+        "ortodontia"
+      ],
+      "notes": "Há material transversal sobre manutenção, mas não existe uma página única de Manutenção Odontológica no DOCX. Não sintetizar regras gerais além do que cada trecho suporta."
+    },
+    "limpeza-dental": {
+      "title": "Limpeza Dental / Profilaxia",
+      "area": "Odontologia",
+      "file": "routes/limpeza-dental.md",
+      "source_file": "site novo 2026.docx",
+      "source_coverage": "references_only",
+      "content_status": "reference_only_do_not_replace",
+      "merge_strategy": "do_not_overwrite_from_this_doc",
+      "source_pages": "8, 16",
+      "source_sections": [
+        "Porcelana também precisa de manutenção",
+        "Como é feito o tratamento da periodontite?"
+      ],
+      "related_routes": [
+        "periodontia",
+        "manutencao-odontologica"
+      ],
+      "notes": "O DOCX menciona limpeza profissional/raspagem em contextos específicos, mas não contém conteúdo suficiente para uma página própria de Limpeza Dental."
+    },
+    "bichectomia": {
+      "title": "Bichectomia",
+      "area": "Odontologia",
+      "file": "routes/bichectomia.md",
+      "source_file": "site novo 2026.docx",
+      "source_coverage": "absent",
+      "content_status": "no_source_do_not_change",
+      "merge_strategy": "do_not_overwrite_from_this_doc",
+      "source_pages": "—",
+      "source_sections": [],
+      "related_routes": [],
+      "notes": "Nenhum conteúdo clínico direto sobre Bichectomia foi identificado no DOCX."
+    }
+  }
+}

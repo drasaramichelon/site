@@ -1,0 +1,132 @@
+{
+  "facetas-de-resina": {
+    "title": "Facetas de Resina e Lentes em Resina",
+    "heroDesktopLocalPath": "/images/treatments/facetas-de-resina/hero-desktop.webp",
+    "heroMobileLocalPath": "/images/treatments/facetas-de-resina/hero-mobile.webp"
+  },
+  "lentes-de-contato-dental": {
+    "title": "Lentes de Contato Dental e Facetas de Porcelana",
+    "heroDesktopLocalPath": "/images/treatments/lentes-de-contato-dental/hero-desktop.webp",
+    "heroMobileLocalPath": "/images/treatments/lentes-de-contato-dental/hero-mobile.webp"
+  },
+  "clareamento-dental": {
+    "title": "Clareamento Dental",
+    "heroDesktopLocalPath": "/images/treatments/clareamento-dental/hero-desktop.webp",
+    "heroMobileLocalPath": "/images/treatments/clareamento-dental/hero-mobile.webp"
+  },
+  "fechamento-de-diastemas": {
+    "title": "Fechamento de Diastemas",
+    "heroDesktopLocalPath": "/images/treatments/fechamento-de-diastemas/hero-desktop.webp",
+    "heroMobileLocalPath": "/images/treatments/fechamento-de-diastemas/hero-mobile.webp"
+  },
+  "implantes-dentarios": {
+    "title": "Implantes Dentários",
+    "heroDesktopLocalPath": "/images/treatments/implantes-dentarios/hero-desktop.webp",
+    "heroMobileLocalPath": "/images/treatments/implantes-dentarios/hero-mobile.webp"
+  },
+  "protese-protocolo": {
+    "title": "Prótese Protocolo",
+    "heroDesktopLocalPath": "/images/treatments/protese-protocolo/hero-desktop.webp",
+    "heroMobileLocalPath": "/images/treatments/protese-protocolo/hero-mobile.webp"
+  },
+  "enxerto-osseo-dentario": {
+    "title": "Enxerto Ósseo para Implantes",
+    "heroDesktopLocalPath": "/images/treatments/enxerto-osseo-dentario/hero-desktop.webp",
+    "heroMobileLocalPath": "/images/treatments/enxerto-osseo-dentario/hero-mobile.webp"
+  },
+  "proteses-dentarias": {
+    "title": "Próteses Dentárias",
+    "heroDesktopLocalPath": "/images/treatments/proteses-dentarias/hero-desktop.webp",
+    "heroMobileLocalPath": "/images/treatments/proteses-dentarias/hero-mobile.webp"
+  },
+  "inlays-onlays": {
+    "title": "Inlays e Onlays / Restaurações Indiretas",
+    "heroDesktopLocalPath": "/images/treatments/inlays-onlays/hero-desktop.webp",
+    "heroMobileLocalPath": "/images/treatments/inlays-onlays/hero-mobile.webp"
+  },
+  "reabilitacao-oral": {
+    "title": "Reabilitação Oral",
+    "heroDesktopLocalPath": "/images/treatments/reabilitacao-oral/hero-desktop.webp",
+    "heroMobileLocalPath": "/images/treatments/reabilitacao-oral/hero-mobile.webp"
+  },
+  "ortodontia": {
+    "title": "Ortodontia / Aparelhos e Alinhadores",
+    "heroDesktopLocalPath": "/images/treatments/ortodontia/hero-desktop.webp",
+    "heroMobileLocalPath": "/images/treatments/ortodontia/hero-mobile.webp"
+  },
+  "invisalign": {
+    "title": "Invisalign / Alinhadores Transparentes",
+    "heroDesktopLocalPath": "/images/treatments/invisalign/hero-desktop.webp",
+    "heroMobileLocalPath": "/images/treatments/invisalign/hero-mobile.webp"
+  },
+  "manutencao-odontologica": {
+    "title": "Manutenção e Acompanhamento Odontológico",
+    "heroDesktopLocalPath": "/images/treatments/manutencao-odontologica/hero-desktop.webp",
+    "heroMobileLocalPath": "/images/treatments/manutencao-odontologica/hero-mobile.webp"
+  },
+  "limpeza-dental": {
+    "title": "Limpeza Dental / Profilaxia",
+    "heroDesktopLocalPath": "/images/treatments/limpeza-dental/hero-desktop.webp",
+    "heroMobileLocalPath": "/images/treatments/limpeza-dental/hero-mobile.webp"
+  },
+  "periodontia": {
+    "title": "Periodontia / Tratamento de Gengiva",
+    "heroDesktopLocalPath": "/images/treatments/periodontia/hero-desktop.webp",
+    "heroMobileLocalPath": "/images/treatments/periodontia/hero-mobile.webp"
+  },
+  "cirurgia-gengival": {
+    "title": "Gengivoplastia e Cirurgia Gengival",
+    "heroDesktopLocalPath": "/images/treatments/cirurgia-gengival/hero-desktop.webp",
+    "heroMobileLocalPath": "/images/treatments/cirurgia-gengival/hero-mobile.webp"
+  },
+  "tratamento-de-canal": {
+    "title": "Tratamento de Canal / Endodontia",
+    "heroDesktopLocalPath": "/images/treatments/tratamento-de-canal/hero-desktop.webp",
+    "heroMobileLocalPath": "/images/treatments/tratamento-de-canal/hero-mobile.webp"
+  },
+  "extracao-de-siso": {
+    "title": "Extração de Siso",
+    "heroDesktopLocalPath": "/images/treatments/extracao-de-siso/hero-desktop.webp",
+    "heroMobileLocalPath": "/images/treatments/extracao-de-siso/hero-mobile.webp"
+  },
+  "bruxismo": {
+    "title": "Bruxismo, DTM e Dor Orofacial",
+    "heroDesktopLocalPath": "/images/treatments/bruxismo/hero-desktop.webp",
+    "heroMobileLocalPath": "/images/treatments/bruxismo/hero-mobile.webp"
+  },
+  "bichectomia": {
+    "title": "Bichectomia",
+    "heroDesktopLocalPath": "/images/treatments/bichectomia/hero-desktop.webp",
+    "heroMobileLocalPath": "/images/treatments/bichectomia/hero-mobile.webp"
+  },
+  "harmonizacao-facial": {
+    "title": "Harmonização Facial",
+    "heroDesktopLocalPath": "/images/treatments/harmonizacao-facial/hero-desktop.webp",
+    "heroMobileLocalPath": "/images/treatments/harmonizacao-facial/hero-mobile.webp"
+  },
+  "preenchimento-facial": {
+    "title": "Preenchimento Facial",
+    "heroDesktopLocalPath": "/images/treatments/preenchimento-facial/hero-desktop.webp",
+    "heroMobileLocalPath": "/images/treatments/preenchimento-facial/hero-mobile.webp"
+  },
+  "preenchimento-labial": {
+    "title": "Preenchimento Labial",
+    "heroDesktopLocalPath": "/images/treatments/preenchimento-labial/hero-desktop.webp",
+    "heroMobileLocalPath": "/images/treatments/preenchimento-labial/hero-mobile.webp"
+  },
+  "botox": {
+    "title": "Botox / Toxina Botulínica e Linhas de Expressão",
+    "heroDesktopLocalPath": "/images/treatments/botox/hero-desktop.webp",
+    "heroMobileLocalPath": "/images/treatments/botox/hero-mobile.webp"
+  },
+  "bioestimuladores-de-colageno": {
+    "title": "Bioestimuladores de Colágeno",
+    "heroDesktopLocalPath": "/images/treatments/bioestimuladores-de-colageno/hero-desktop.webp",
+    "heroMobileLocalPath": "/images/treatments/bioestimuladores-de-colageno/hero-mobile.webp"
+  },
+  "perfiloplastia": {
+    "title": "Perfiloplastia",
+    "heroDesktopLocalPath": "/images/treatments/perfiloplastia/hero-desktop.webp",
+    "heroMobileLocalPath": "/images/treatments/perfiloplastia/hero-mobile.webp"
+  }
+}
