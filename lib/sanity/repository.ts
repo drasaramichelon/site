@@ -1,7 +1,7 @@
 import {createClient} from "next-sanity";
 import {fallbackArticles, fallbackLandingPages, fallbackPages, fallbackProfessionals, fallbackSiteSettings, fallbackSitemapPaths, fallbackSupportStaff, fallbackTreatments} from "@/lib/content/fallback";
 import type {Article, InstitutionalPage, LandingPage, Professional, SiteSettings, SupportStaff, Treatment} from "@/lib/content/types";
-import {articlesQuery, entryQuery, professionalQuery, professionalsQuery, settingsQuery, sitemapQuery} from "@/lib/sanity/queries";
+import {articlesQuery, entryQuery, professionalQuery, professionalsQuery, settingsQuery, sitemapHomeQuery, sitemapQuery} from "@/lib/sanity/queries";
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production";
@@ -102,16 +102,58 @@ export async function getSiteSettings(): Promise<SiteSettings> {
   }
 }
 
-export async function getSitemapPaths(): Promise<string[]> {
-  if (!sanityClient) return fallbackSitemapPaths;
+export type SitemapEntry = {
+  path: string;
+  lastModified?: string | Date;
+};
+
+export async function getSitemapEntries(): Promise<SitemapEntry[]> {
+  const getFallbackEntries = (): SitemapEntry[] => {
+    const articleDates = new Map<string, string | Date>();
+    for (const article of Object.values(fallbackArticles)) {
+      const rawDate = article.updatedAt || article.publishedAt;
+      if (rawDate) {
+        articleDates.set(article.path, rawDate);
+      }
+    }
+    return fallbackSitemapPaths.map((path) => ({
+      path,
+      lastModified: articleDates.get(path),
+    }));
+  };
+
+  if (!sanityClient) return getFallbackEntries();
+
   try {
-    const remote = await sanityClient.fetch<{path: string}[]>(sitemapQuery, {}, {next: {revalidate: 3600, tags: ["sitemap"]}});
-    return ["", "/clinica", "/equipe", "/contato", ...remote.map((item) => item.path)]
-      .filter((path) => path !== "/home")
-      .filter((path, index, paths) => paths.indexOf(path) === index);
+    const [remote, homeDate] = await Promise.all([
+      sanityClient.fetch<{path: string; lastModified?: string}[]>(sitemapQuery, {}, {next: {revalidate: 3600, tags: ["sitemap"]}}),
+      sanityClient.fetch<string | null>(sitemapHomeQuery, {}, {next: {revalidate: 3600, tags: ["site-settings"]}}),
+    ]);
+
+    const entryMap = new Map<string, string | undefined>();
+    entryMap.set("", homeDate ?? undefined);
+    entryMap.set("/clinica", undefined);
+    entryMap.set("/equipe", undefined);
+    entryMap.set("/contato", undefined);
+
+    for (const item of remote) {
+      if (item.path && item.path !== "/home") {
+        entryMap.set(item.path, item.lastModified);
+      }
+    }
+
+    return Array.from(entryMap.entries()).map(([path, lastModified]) => ({
+      path,
+      lastModified,
+    }));
   } catch {
-    return fallbackSitemapPaths;
+    return getFallbackEntries();
   }
+}
+
+export async function getSitemapPaths(): Promise<string[]> {
+  const entries = await getSitemapEntries();
+  return entries.map((entry) => entry.path);
 }
 
 export function getStaticSlugs() {

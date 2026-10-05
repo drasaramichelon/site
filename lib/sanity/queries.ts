@@ -118,5 +118,9 @@ export const sitemapQuery = `*[
     _type == "article" => coalesce(routePath, "/conteudos/" + slug.current),
     _type == "professional" && slug.current != "dra-sara-michelon" => "/equipe/" + slug.current,
     "/" + slug.current
-  )
+  ),
+  "lastModified": coalesce(updatedAt, publishedAt, _updatedAt)
 }`;
+
+export const sitemapHomeQuery = `*[_type in ["page", "siteSettings"] && (slug.current == "home" || _type == "siteSettings")] | order(_updatedAt desc)[0]._updatedAt`;
+

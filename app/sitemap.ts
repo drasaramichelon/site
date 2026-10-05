@@ -1,33 +1,25 @@
 import type {MetadataRoute} from "next";
-import {getArticles, getSiteSettings, getSitemapPaths} from "@/lib/sanity/repository";
+import {getSitemapEntries, getSiteSettings} from "@/lib/sanity/repository";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [settings, paths, articles] = await Promise.all([
+  const [settings, entries] = await Promise.all([
     getSiteSettings(),
-    getSitemapPaths(),
-    getArticles(),
+    getSitemapEntries(),
   ]);
 
-  const articleDates = new Map<string, Date>();
-  for (const article of articles) {
-    const rawDate = article.updatedAt || article.publishedAt;
-    if (rawDate) {
-      const parsed = new Date(rawDate);
-      if (!isNaN(parsed.getTime())) {
-        articleDates.set(article.path, parsed);
-      }
-    }
-  }
-
-  const now = new Date();
-  return paths.map((path) => {
-    const isRoot = path === "";
-    const lastModified = articleDates.get(path) ?? now;
-    return {
-      url: `${settings.siteUrl}${path}`,
-      lastModified,
+  return entries.map((entry) => {
+    const isRoot = entry.path === "";
+    const item: MetadataRoute.Sitemap[number] = {
+      url: `${settings.siteUrl}${entry.path}`,
       changeFrequency: isRoot ? "weekly" : "monthly",
-      priority: isRoot ? 1 : path === "/facetas-de-resina" ? 0.9 : 0.7,
+      priority: isRoot ? 1 : entry.path === "/facetas-de-resina" ? 0.9 : 0.7,
     };
+
+    if (entry.lastModified) {
+      item.lastModified = new Date(entry.lastModified);
+    }
+
+    return item;
   });
 }
+
