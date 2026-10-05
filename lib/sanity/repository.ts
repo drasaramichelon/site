@@ -74,17 +74,19 @@ function sanitizeSiteUrl(url?: string | null): string {
   if (!trimmed) {
     if (process.env.NEXT_PUBLIC_SITE_URL && process.env.NEXT_PUBLIC_SITE_URL.trim().length > 0) {
       const envUrl = process.env.NEXT_PUBLIC_SITE_URL.trim();
-      return envUrl.startsWith("http") ? envUrl : `https://${envUrl}`;
+      const formatted = envUrl.startsWith("http") ? envUrl : `https://${envUrl}`;
+      return formatted.replace(/\/+$/, "");
     }
     if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
-      return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+      return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`.replace(/\/+$/, "");
     }
     if (process.env.VERCEL_URL) {
-      return `https://${process.env.VERCEL_URL}`;
+      return `https://${process.env.VERCEL_URL}`.replace(/\/+$/, "");
     }
     return "https://odontoestetica.net";
   }
-  return trimmed.startsWith("http") ? trimmed : `https://${trimmed}`;
+  const formatted = trimmed.startsWith("http") ? trimmed : `https://${trimmed}`;
+  return formatted.replace(/\/+$/, "");
 }
 
 export async function getSiteSettings(): Promise<SiteSettings> {
@@ -104,7 +106,9 @@ export async function getSitemapPaths(): Promise<string[]> {
   if (!sanityClient) return fallbackSitemapPaths;
   try {
     const remote = await sanityClient.fetch<{path: string}[]>(sitemapQuery, {}, {next: {revalidate: 3600, tags: ["sitemap"]}});
-    return ["", "/clinica", "/equipe", "/contato", ...remote.map((item) => item.path)].filter((path, index, paths) => paths.indexOf(path) === index);
+    return ["", "/clinica", "/equipe", "/contato", ...remote.map((item) => item.path)]
+      .filter((path) => path !== "/home")
+      .filter((path, index, paths) => paths.indexOf(path) === index);
   } catch {
     return fallbackSitemapPaths;
   }

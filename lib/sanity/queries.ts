@@ -110,7 +110,8 @@ export const settingsQuery = `*[_type == "siteSettings"][0]{
 
 export const sitemapQuery = `*[
   _type in ["treatment", "page", "article", "professional"] &&
-  defined(slug.current) && coalesce(publishStatus, "published") == "published" &&
+  defined(slug.current) && slug.current != "home" &&
+  coalesce(publishStatus, "published") == "published" &&
   coalesce(seo.index, true) == true
 ]{
   "path": select(
