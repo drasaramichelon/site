@@ -22,6 +22,7 @@ type FbqFunction = {
 type AnalyticsWindow = typeof window & {
   dataLayer?: unknown[];
   gtag?: (...args: unknown[]) => void;
+  gtag_report_conversion?: (url?: string) => boolean;
   fbq?: FbqFunction;
   _fbq?: unknown;
   clarity?: (...args: unknown[]) => void;
@@ -111,9 +112,9 @@ function sendEvent(event: string, payload: AnalyticsPayload, ids: TrackingIds) {
   if (target.gtag) {
     target.gtag("event", event, enriched);
 
-    // Se houver conversion label específico configurado para Google Ads em cliques de conversão
+    // Se houver conversion label específico configurado para Google Ads em cliques de WhatsApp
     if (
-      (event === "whatsapp_click" || event === "appointment_cta_click") &&
+      event === "whatsapp_click" &&
       ids.googleAds &&
       ids.googleAdsConversionLabel
     ) {
@@ -251,6 +252,25 @@ export function TrackingProvider({ids}: {ids: TrackingIds}) {
       if (ids.googleAds && ids.googleAds !== measurementId) {
         target.gtag("config", ids.googleAds);
       }
+
+      // Função global recomendada pelo Google Ads para verificação e disparos diretos
+      target.gtag_report_conversion = (url?: string) => {
+        const callback = () => {
+          if (typeof url !== "undefined" && url) {
+            window.location.href = url;
+          }
+        };
+
+        if (target.gtag && ids.googleAds && ids.googleAdsConversionLabel) {
+          target.gtag("event", "conversion", {
+            send_to: `${ids.googleAds}/${ids.googleAdsConversionLabel}`,
+            event_callback: callback,
+          });
+        } else {
+          callback();
+        }
+        return false;
+      };
     }
 
     // --- C. META PIXEL (FACEBOOK) ---

@@ -544,6 +544,8 @@ export function VirtualTour() {
               href={`https://wa.me/5548985063001?text=${whatsappMessage}`}
               target="_blank"
               rel="noopener noreferrer"
+              data-track-event="whatsapp_click"
+              data-track-location="virtual_tour"
               className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-xl bg-[#25D366] px-6 py-3 text-sm font-bold text-white shadow-lg transition-all hover:bg-[#20ba5a] active:scale-95"
             >
               <span>Agendar Avaliação via WhatsApp</span>
