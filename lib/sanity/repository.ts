@@ -20,20 +20,23 @@ function fallbackEntry(slug: string): ContentEntry | null {
 }
 
 export async function getContentEntry(slug: string): Promise<ContentEntry | null> {
-  if (!sanityClient) return fallbackEntry(slug);
+  const fallback = fallbackEntry(slug);
+  if (!sanityClient) return fallback;
   try {
-    return await sanityClient.fetch<ContentEntry | null>(entryQuery, {slug}, {next: {revalidate: 3600, tags: [`content:${slug}`]}});
+    const entry = await sanityClient.fetch<ContentEntry | null>(entryQuery, {slug}, {next: {revalidate: 3600, tags: [`content:${slug}`]}});
+    return entry ?? fallback;
   } catch {
-    return null;
+    return fallback;
   }
 }
 
 export async function getProfessionals(): Promise<Professional[]> {
   if (!sanityClient) return fallbackProfessionals;
   try {
-    return await sanityClient.fetch<Professional[]>(professionalsQuery, {}, {next: {revalidate: 3600, tags: ["professionals"]}});
+    const remote = await sanityClient.fetch<Professional[]>(professionalsQuery, {}, {next: {revalidate: 3600, tags: ["professionals"]}});
+    return remote && remote.length > 0 ? remote : fallbackProfessionals;
   } catch {
-    return [];
+    return fallbackProfessionals;
   }
 }
 
@@ -42,30 +45,34 @@ export async function getSupportStaff(): Promise<SupportStaff[]> {
 }
 
 export async function getProfessional(slug: string): Promise<Professional | null> {
-  if (!sanityClient) return fallbackProfessionals.find((professional) => professional.slug === slug) ?? null;
+  const fallback = fallbackProfessionals.find((professional) => professional.slug === slug) ?? null;
+  if (!sanityClient) return fallback;
   try {
-    return await sanityClient.fetch<Professional | null>(professionalQuery, {slug}, {next: {revalidate: 3600, tags: [`professional:${slug}`]}});
+    const remote = await sanityClient.fetch<Professional | null>(professionalQuery, {slug}, {next: {revalidate: 3600, tags: [`professional:${slug}`]}});
+    return remote ?? fallback;
   } catch {
-    return null;
+    return fallback;
   }
 }
 
 export async function getArticle(slug: string): Promise<Article | null> {
-  if (!sanityClient) return fallbackArticles[slug] ?? null;
+  const fallback = fallbackArticles[slug] ?? null;
+  if (!sanityClient) return fallback;
   try {
     const entry = await sanityClient.fetch<ContentEntry | null>(entryQuery, {slug}, {next: {revalidate: 3600, tags: [`content:${slug}`]}});
-    return entry?.contentType === "article" ? entry : null;
+    return entry?.contentType === "article" ? entry : fallback;
   } catch {
-    return null;
+    return fallback;
   }
 }
 
 export async function getArticles(): Promise<Article[]> {
   if (!sanityClient) return Object.values(fallbackArticles);
   try {
-    return await sanityClient.fetch<Article[]>(articlesQuery, {}, {next: {revalidate: 3600, tags: ["articles"]}});
+    const remote = await sanityClient.fetch<Article[]>(articlesQuery, {}, {next: {revalidate: 3600, tags: ["articles"]}});
+    return remote && remote.length > 0 ? remote : Object.values(fallbackArticles);
   } catch {
-    return [];
+    return Object.values(fallbackArticles);
   }
 }
 
@@ -129,6 +136,8 @@ export async function getSitemapEntries(): Promise<SitemapEntry[]> {
       sanityClient.fetch<{path: string; lastModified?: string}[]>(sitemapQuery, {}, {next: {revalidate: 3600, tags: ["sitemap"]}}),
       sanityClient.fetch<string | null>(sitemapHomeQuery, {}, {next: {revalidate: 3600, tags: ["site-settings"]}}),
     ]);
+
+    if (!remote || remote.length === 0) return getFallbackEntries();
 
     const entryMap = new Map<string, string | undefined>();
     entryMap.set("", homeDate ?? undefined);

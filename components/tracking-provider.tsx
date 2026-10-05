@@ -298,6 +298,13 @@ export function TrackingProvider({ids}: {ids: TrackingIds}) {
 
     // --- D. MICROSOFT CLARITY (OPCIONAL) ---
     if (ids.clarity) {
+      if (!target.clarity) {
+        const clarityStub = function (...args: unknown[]) {
+          ((clarityStub as unknown as {q: unknown[]}).q ??= []).push(args);
+        };
+        (clarityStub as unknown as {q: unknown[]}).q = [];
+        target.clarity = clarityStub;
+      }
       loadScript("dra-sara-clarity", `https://www.clarity.ms/tag/${encodeURIComponent(ids.clarity)}`);
     }
   }, [consent, ids, isEnabled]);
