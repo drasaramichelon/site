@@ -95,7 +95,7 @@ const requiredSlugs = [
   "harmonizacao-facial",
   "preenchimento-facial",
   "preenchimento-labial",
-  "botox",
+  "linhas-de-expressao",
   "bioestimuladores-de-colageno",
   "perfiloplastia",
 ];
