@@ -43,7 +43,7 @@ A posição e o volume de determinadas estruturas podem interferir na percepçã
 
 ### 2. Execução do planejamento
 
-Dependendo do caso, o tratamento pode envolver preenchimentos com ácido hialurônico, toxina botulínica, bioestimuladores de colágeno ou a combinação de diferentes técnicas.
+Dependendo do caso, o tratamento pode envolver preenchimentos com ácido hialurônico, suavização de linhas de expressão, bioestimuladores de colágeno ou a combinação de diferentes técnicas.
 
 Quando existem várias indicações, os procedimentos podem ser realizados em etapas, seguindo uma sequência definida previamente.
 
@@ -115,15 +115,15 @@ A indicação depende da anatomia, das proporções faciais e dos objetivos do p
 
 > **Instrução do documento:** → LINK: Saiba mais sobre Perfiloplastia
 
-TOXINA BOTULÍNICA
+### SUAVIZAÇÃO DE LINHAS DE EXPRESSÃO
 
-A toxina botulínica atua reduzindo temporariamente a contração de músculos específicos da face e é utilizada principalmente no tratamento das rugas dinâmicas, aquelas relacionadas aos movimentos de expressão.
+O tratamento para linhas de expressão atua modulando temporariamente a intensidade de contração de músculos específicos da face e é indicado principalmente para rugas dinâmicas, aquelas relacionadas aos movimentos e à mímica facial.
 
-Também pode contribuir para evitar que determinadas linhas relacionadas à contração muscular se tornem progressivamente mais marcadas em repouso.
+Também pode contribuir para evitar que determinadas linhas relacionadas à contração contínua se tornem progressivamente vincos estáticos em repouso.
 
-A quantidade, os pontos de aplicação e os músculos tratados são definidos individualmente, considerando a anatomia e a movimentação facial de cada paciente.
+A quantidade de pontos de aplicação e as regiões tratadas são definidas individualmente, considerando a anatomia e a dinâmica facial de cada paciente.
 
-> **Instrução do documento:** → LINK: Saiba mais sobre Toxina Botulínica
+> **Instrução do documento:** → LINK: Saiba mais sobre Linhas de Expressão
 
 ### BIOESTIMULADORES DE COLÁGENO
 
@@ -177,7 +177,7 @@ Não existe um valor único porque Full Face não corresponde a uma quantidade p
 
 ### NÃO SABE QUAL PROCEDIMENTO É MAIS INDICADO PARA VOCÊ?
 
-Você não precisa chegar à consulta sabendo se precisa de preenchimento, toxina botulínica, bioestimulador ou outro procedimento.
+Você não precisa chegar à consulta sabendo se precisa de preenchimento, suavização de linhas de expressão, bioestimulador ou outro procedimento.
 
 A avaliação facial é justamente o momento de analisar suas queixas, as características da sua face e as possibilidades de tratamento, inclusive reconhecendo quando determinado procedimento não tem indicação.
 

@@ -15,11 +15,6 @@ const nextConfig: NextConfig = {
         destination: "/lentes-de-contato-dental",
         permanent: true,
       },
-      {
-        source: "/botox",
-        destination: "/linhas-de-expressao",
-        permanent: true,
-      },
     ];
   },
 };

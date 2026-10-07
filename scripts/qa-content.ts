@@ -169,7 +169,7 @@ for (const slug of requiredSlugs) {
 const adsLandingRes = await read("/avaliacao-estetica-facial");
 if (adsLandingRes.status === 200) {
   const adsHtml = await adsLandingRes.text();
-  if (adsHtml.includes("/images/treatments/botox") || adsHtml.includes("/images/treatments/harmonizacao-facial")) {
+  if (adsHtml.includes("/images/treatments/linhas-de-expressao") || adsHtml.includes("/images/treatments/harmonizacao-facial")) {
     failures.push("/avaliacao-estetica-facial recebeu indevidamente banner de procedimento de tratamento");
   }
 }
