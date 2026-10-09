@@ -1194,7 +1194,7 @@ const treatmentSeeds: TreatmentSeed[] = [
   },
   {
     slug: "limpeza-dental",
-    title: "Limpeza Dentária e Profilaxia",
+    title: "Limpeza Dentária",
     specialty: "Prevenção",
     variant: "process",
     lead: "dra-sara-michelon",
@@ -1542,13 +1542,13 @@ export const fallbackArticles: Record<string, Article> = {
   },
   "quando-e-necessario-enxerto-osseo-para-implante": {
     contentType: "article", slug: "quando-e-necessario-enxerto-osseo-para-implante", path: "/conteudos/quando-e-necessario-enxerto-osseo-para-implante", title: "Quando é necessário enxerto ósseo para implante?", excerpt: "O enxerto pode ser indicado quando o suporte disponível não permite posicionar o implante conforme o plano protético e anatômico.",
-    seo: { title: "Quando é Necessário Enxerto Ósseo para Implante?", description: "Saiba como exames, volume ósseo, posição do implante e estruturas próximas entram na indicação de enxerto ósseo.", canonical: "/conteudos/quando-e-necessario-enxerto-osseo-para-implante", index: true }, author: fallbackProfessionals[1], reviewer: fallbackProfessionals[1], categories: ["Implantodontia"],
+    seo: { title: "Quando é Necessário Enxerto Ósseo para Implante?", description: "Saiba como exames, volume ósseo, posição do implante e estruturas próximas entram na indicação de enxerto ósseo.", canonical: "/conteudos/quando-e-necessario-enxerto-osseo-para-implante", index: true }, author: fallbackProfessionals[2], reviewer: fallbackProfessionals[2], categories: ["Implantodontia"],
     sections: [{ _key: "enxerto-criterio", _type: "richText", heading: "O implante é planejado a partir da futura prótese", body: ["O volume ósseo é analisado em relação à posição necessária para o implante e às estruturas anatômicas próximas. Por isso, a indicação não depende apenas de uma medida isolada.", "Exame clínico e imagem ajudam a definir se o enxerto é dispensável, simultâneo ao implante ou realizado em uma etapa anterior."] }, { _key: "enxerto-decisoes", _type: "cardGrid", heading: "Decisões do planejamento", items: [{ title: "Sem enxerto", text: "Quando existe suporte compatível com o plano." }, { title: "Junto do implante", text: "Possível em situações selecionadas." }, { title: "Antes do implante", text: "Quando a reconstrução precisa cicatrizar previamente." }] }],
     relatedTreatments: [{ title: "Enxerto ósseo dentário", href: "/enxerto-osseo-dentario" }, { title: "Implantes dentários", href: "/implantes-dentarios" }],
   },
   "gengiva-sangrando-e-normal": {
     contentType: "article", slug: "gengiva-sangrando-e-normal", path: "/conteudos/gengiva-sangrando-e-normal", title: "Gengiva sangrando é normal?", excerpt: "Sangramento recorrente merece avaliação: ele pode acompanhar inflamação, acúmulo de placa ou outras condições que precisam ser diferenciadas.",
-    seo: { title: "Gengiva Sangrando é Normal? | Periodontia", description: "Entenda por que sangramento gengival recorrente merece avaliação e como higiene, inflamação e saúde periodontal são investigadas.", canonical: "/conteudos/gengiva-sangrando-e-normal", index: true }, author: fallbackProfessionals[3], reviewer: fallbackProfessionals[3], categories: ["Periodontia"],
+    seo: { title: "Gengiva Sangrando é Normal? | Periodontia", description: "Entenda por que sangramento gengival recorrente merece avaliação e como higiene, inflamação e saúde periodontal são investigadas.", canonical: "/conteudos/gengiva-sangrando-e-normal", index: true }, author: fallbackProfessionals[1], reviewer: fallbackProfessionals[1], categories: ["Periodontia"],
     sections: [{ _key: "gengiva-sinal", _type: "richText", heading: "Sangramento é um sinal, não um diagnóstico", body: ["A frequência, o local e a presença de inchaço, dor, retração ou mobilidade ajudam a entender o contexto. Interromper a higiene por medo de sangrar pode favorecer o acúmulo de placa.", "A avaliação periodontal identifica a origem, orienta a técnica de higiene e define se há necessidade de tratamento além da profilaxia."] }, { _key: "gengiva-alertas", _type: "cardGrid", heading: "O que observar", items: [{ title: "Frequência", text: "Sangramento repetido ao escovar ou espontâneo pede atenção." }, { title: "Outros sinais", text: "Inchaço, retração, mau hálito persistente ou mobilidade devem ser relatados." }, { title: "Implantes", text: "Sangramento ao redor de implantes também precisa de avaliação." }] }],
     relatedTreatments: [{ title: "Periodontia", href: "/periodontia" }, { title: "Limpeza dental", href: "/limpeza-dental" }],
   },

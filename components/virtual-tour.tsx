@@ -9,6 +9,7 @@ export interface JourneyImage {
   src: string;
   alt: string;
   caption?: string;
+  objectPosition?: string;
 }
 
 export interface JourneyStep {
@@ -147,6 +148,7 @@ const JOURNEY_STEPS: JourneyStep[] = [
         src: "/images/real/tecnologia/planning-digital-scan.webp",
         alt: "Dra. Sara Michelon durante planejamento odontológico e escaneamento digital 3D",
         caption: "Planejamento digital do sorriso conduzido pela Dra. Sara Michelon",
+        objectPosition: "center 15%",
       },
       {
         src: "/images/real/clinica/clinic-office.webp",
@@ -243,12 +245,13 @@ function EnvironmentCarousel({
     const img = images[0];
     return (
       <figure className="group">
-        <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-md">
+        <div className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/9] w-full overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-md">
           <Image
             src={img.src}
             alt={img.alt}
             fill
             sizes="(max-width: 1024px) 100vw, 1120px"
+            style={img.objectPosition ? { objectPosition: img.objectPosition } : undefined}
             className="object-cover transition-transform duration-500 group-hover:scale-[1.01]"
           />
           {img.caption && (
@@ -283,7 +286,7 @@ function EnvironmentCarousel({
         {images.map((img, idx) => (
           <div
             key={img.src}
-            className="relative aspect-[16/10] sm:aspect-[16/9] w-full shrink-0 snap-center snap-always overflow-hidden"
+            className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/9] w-full shrink-0 snap-center snap-always overflow-hidden"
           >
             <Image
               src={img.src}
@@ -291,6 +294,7 @@ function EnvironmentCarousel({
               fill
               priority={idx === 0}
               sizes="(max-width: 1024px) 100vw, 1120px"
+              style={img.objectPosition ? { objectPosition: img.objectPosition } : undefined}
               className="object-cover transition-transform duration-500"
             />
             {/* Scrim com Legenda Integrada */}
