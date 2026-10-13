@@ -248,27 +248,42 @@ function sendEvent(event: string, payload: AnalyticsPayload, ids: TrackingIds) {
     target.dataLayer.push({event, ...enriched});
   }
 
-  // 2. Google Analytics 4 & Google Ads (gtag direto)
-  if (target.gtag) {
-    // Evento base no GA4
-    target.gtag("event", event, {
+  // 2. Google Analytics 4 & Google Ads (gtag direto com Arguments object)
+  const adsId = formatGoogleAdsId(ids.googleAds);
+  const adsLabel = sanitizeConversionLabel(ids.googleAdsConversionLabel);
+
+  target.dataLayer ??= [];
+  if (!target.gtag) {
+    target.gtag = function () {
+      // eslint-disable-next-line prefer-rest-params
+      target.dataLayer?.push(arguments);
+    } as unknown as (...args: unknown[]) => void;
+  }
+
+  // Evento base no GA4
+  target.gtag("event", event, {
+    transport_type: "beacon",
+    ...enriched,
+  });
+
+  // Disparo explícito da Ação de Conversão no Google Ads para cliques no WhatsApp
+  if (event === "whatsapp_click" && adsId && adsLabel) {
+    // 1) Conversão oficial Google Ads padrão
+    target.gtag("event", "conversion", {
+      send_to: `${adsId}/${adsLabel}`,
+      value: 1.0,
+      currency: "BRL",
       transport_type: "beacon",
       ...enriched,
     });
 
-    const adsId = formatGoogleAdsId(ids.googleAds);
-    const adsLabel = sanitizeConversionLabel(ids.googleAdsConversionLabel);
-
-    // Disparo explícito da Ação de Conversão no Google Ads para cliques no WhatsApp
-    if (event === "whatsapp_click" && adsId && adsLabel) {
-      target.gtag("event", "conversion", {
-        send_to: `${adsId}/${adsLabel}`,
-        value: 1.0,
-        currency: "BRL",
-        transport_type: "beacon",
-        ...enriched,
-      });
-    }
+    // 2) Evento direto associado ao ID do Ads (satisfaz diagnósticos baseados no nome do evento no Tag Assistant)
+    target.gtag("event", "whatsapp_click", {
+      send_to: `${adsId}/${adsLabel}`,
+      transport_type: "beacon",
+      ...enriched,
+    });
+  }
 
     // Mapeamento de Lead padrão do Google
     if (event === "whatsapp_click") {
@@ -305,7 +320,6 @@ function sendEvent(event: string, payload: AnalyticsPayload, ids: TrackingIds) {
         ...enriched,
       });
     }
-  }
 
   // 3. Meta Pixel (Facebook Pixel - fbq)
   if (target.fbq) {
@@ -412,9 +426,15 @@ export function TrackingProvider({ids}: {ids: TrackingIds}) {
     const primaryGoogleId = adsId ?? ga4Id;
 
     if (primaryGoogleId) {
-      target.gtag ??= (...args: unknown[]) => {
-        dataLayer().push(args);
-      };
+      target.dataLayer ??= [];
+      if (!target.gtag) {
+        // Obrigatório usar function() para que 'arguments' tenha a tipagem interna [object Arguments],
+        // a qual o gtag.js exige para reconhecer chamadas da Google Tag.
+        target.gtag = function () {
+          // eslint-disable-next-line prefer-rest-params
+          target.dataLayer?.push(arguments);
+        } as unknown as (...args: unknown[]) => void;
+      }
 
       // Google Consent Mode v2 - Garante conformidade com LGPD e modelagem do Google Ads
       target.gtag("consent", "default", {
