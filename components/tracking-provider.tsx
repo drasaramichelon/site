@@ -47,6 +47,29 @@ function dataLayer(): unknown[] {
 }
 
 /**
+ * Normaliza o ID do Google Ads garantindo o prefixo AW- exigido pela Google Tag.
+ */
+function formatGoogleAdsId(rawId?: string | null): string | null {
+  if (!rawId) return null;
+  const clean = rawId.trim();
+  if (!clean) return null;
+  return clean.toUpperCase().startsWith("AW-") ? clean : `AW-${clean}`;
+}
+
+/**
+ * Normaliza o rótulo de conversão corrigindo erros tipográficos conhecidos de digitação
+ * (por exemplo, a confusão comum de 'l' minúsculo por 'I' maiúsculo no sufixo de hash).
+ */
+function sanitizeConversionLabel(rawLabel?: string | null): string | null {
+  if (!rawLabel) return null;
+  const clean = rawLabel.trim();
+  if (clean === "pfKdCIrUmq8cEPiNjdlD") {
+    return "pfKdCIrUmq8cEPiNjdID";
+  }
+  return clean.length > 0 ? clean : null;
+}
+
+/**
  * Captura e persiste parâmetros de campanha (UTMs e click IDs de Google/Meta Ads)
  * no sessionStorage para não perder a atribuição durante a navegação entre páginas.
  */
@@ -88,6 +111,123 @@ function getCampaignParams(): Record<string, string> {
 }
 
 /**
+ * Detector inteligente de links de contato e rotas externas.
+ * Identifica automaticamente WhatsApp, ligações, e-mail, rotas/mapa e redes sociais.
+ */
+function detectOutboundLink(anchor: HTMLAnchorElement): {
+  event: string;
+  payload: Record<string, unknown>;
+} | null {
+  const href = anchor.href;
+  if (!href) return null;
+
+  const urlLower = href.toLowerCase();
+
+  // 1. WhatsApp (wa.me, api.whatsapp.com, web.whatsapp.com)
+  if (
+    urlLower.includes("wa.me") ||
+    urlLower.includes("whatsapp.com") ||
+    urlLower.includes("api.whatsapp.com")
+  ) {
+    return {
+      event: "whatsapp_click",
+      payload: {
+        destination_url: href,
+        link_text: anchor.innerText?.trim() || "WhatsApp",
+        outbound: true,
+      },
+    };
+  }
+
+  // 2. Chamadas telefônicas (tel:)
+  if (urlLower.startsWith("tel:")) {
+    return {
+      event: "phone_click",
+      payload: {
+        destination_url: href,
+        phone_number: href.replace(/^tel:/i, "").trim(),
+        link_text: anchor.innerText?.trim() || "Telefone",
+        outbound: true,
+      },
+    };
+  }
+
+  // 3. E-mail (mailto:)
+  if (urlLower.startsWith("mailto:")) {
+    return {
+      event: "email_click",
+      payload: {
+        destination_url: href,
+        email_address: href.replace(/^mailto:/i, "").trim(),
+        link_text: anchor.innerText?.trim() || "E-mail",
+        outbound: true,
+      },
+    };
+  }
+
+  // 4. Rotas e mapas (Google Maps, Waze)
+  if (
+    urlLower.includes("google.com/maps") ||
+    urlLower.includes("maps.app.goo.gl") ||
+    urlLower.includes("waze.com")
+  ) {
+    return {
+      event: "directions_click",
+      payload: {
+        destination_url: href,
+        link_text: anchor.innerText?.trim() || "Como Chegar",
+        outbound: true,
+      },
+    };
+  }
+
+  // 5. Redes Sociais externas (Instagram, Facebook)
+  if (
+    urlLower.includes("instagram.com") ||
+    urlLower.includes("facebook.com") ||
+    urlLower.includes("linkedin.com") ||
+    urlLower.includes("youtube.com")
+  ) {
+    return {
+      event: "social_click",
+      payload: {
+        destination_url: href,
+        social_network: urlLower.includes("instagram.com")
+          ? "Instagram"
+          : urlLower.includes("facebook.com")
+          ? "Facebook"
+          : "Social",
+        link_text: anchor.innerText?.trim() || "Rede Social",
+        outbound: true,
+      },
+    };
+  }
+
+  // 6. Demais links externos saindo do domínio da clínica
+  try {
+    const urlObj = new URL(href, window.location.origin);
+    if (
+      urlObj.origin !== window.location.origin &&
+      !urlLower.startsWith("javascript:")
+    ) {
+      return {
+        event: "outbound_click",
+        payload: {
+          destination_url: href,
+          destination_host: urlObj.hostname,
+          link_text: anchor.innerText?.trim() || "Link Externo",
+          outbound: true,
+        },
+      };
+    }
+  } catch {
+    // URL inválida ignorada
+  }
+
+  return null;
+}
+
+/**
  * Despachante unificado de eventos de rastreamento:
  * Envia simultaneamente para Google Analytics 4, Google Ads, Meta Pixel e GTM DataLayer.
  */
@@ -103,32 +243,65 @@ function sendEvent(event: string, payload: AnalyticsPayload, ids: TrackingIds) {
     ...payload,
   };
 
-  // 1. Google Tag Manager (DataLayer push)
+  // 1. Google Tag Manager (DataLayer push unificado)
   if (target.dataLayer) {
     target.dataLayer.push({event, ...enriched});
   }
 
-  // 2. Google Analytics 4 & Google Ads (gtag)
+  // 2. Google Analytics 4 & Google Ads (gtag direto)
   if (target.gtag) {
-    target.gtag("event", event, enriched);
+    // Evento base no GA4
+    target.gtag("event", event, {
+      transport_type: "beacon",
+      ...enriched,
+    });
 
-    // Se houver conversion label específico configurado para Google Ads em cliques de WhatsApp
-    if (
-      event === "whatsapp_click" &&
-      ids.googleAds &&
-      ids.googleAdsConversionLabel
-    ) {
+    const adsId = formatGoogleAdsId(ids.googleAds);
+    const adsLabel = sanitizeConversionLabel(ids.googleAdsConversionLabel);
+
+    // Disparo explícito da Ação de Conversão no Google Ads para cliques no WhatsApp
+    if (event === "whatsapp_click" && adsId && adsLabel) {
       target.gtag("event", "conversion", {
-        send_to: `${ids.googleAds}/${ids.googleAdsConversionLabel}`,
+        send_to: `${adsId}/${adsLabel}`,
+        value: 1.0,
+        currency: "BRL",
+        transport_type: "beacon",
         ...enriched,
       });
     }
 
-    // Mapeamento para evento padrão de Lead do Google
+    // Mapeamento de Lead padrão do Google
     if (event === "whatsapp_click") {
       target.gtag("event", "generate_lead", {
         currency: "BRL",
-        value: 0,
+        value: 1.0,
+        transport_type: "beacon",
+        ...enriched,
+      });
+    }
+
+    // Mapeamento de Contato telefônico
+    if (event === "phone_click") {
+      target.gtag("event", "contact", {
+        method: "phone",
+        transport_type: "beacon",
+        ...enriched,
+      });
+    }
+
+    // Mapeamento de Contato por e-mail
+    if (event === "email_click") {
+      target.gtag("event", "contact", {
+        method: "email",
+        transport_type: "beacon",
+        ...enriched,
+      });
+    }
+
+    // Mapeamento de Localização
+    if (event === "directions_click") {
+      target.gtag("event", "find_location", {
+        transport_type: "beacon",
         ...enriched,
       });
     }
@@ -160,6 +333,13 @@ function sendEvent(event: string, payload: AnalyticsPayload, ids: TrackingIds) {
         });
         break;
 
+      case "email_click":
+        target.fbq("track", "Contact", {
+          content_name: "E-mail Clínico",
+          ...enriched,
+        });
+        break;
+
       case "appointment_cta_click":
         target.fbq("track", "Schedule", enriched);
         break;
@@ -185,23 +365,28 @@ function sendEvent(event: string, payload: AnalyticsPayload, ids: TrackingIds) {
 
 export function TrackingProvider({ids}: {ids: TrackingIds}) {
   const pathname = usePathname();
-  const hasGoogle = Boolean(ids.ga4 || ids.gtm || ids.googleAds);
+  const adsId = formatGoogleAdsId(ids.googleAds);
+  const adsLabel = sanitizeConversionLabel(ids.googleAdsConversionLabel);
+  const ga4Id = ids.ga4?.trim() || null;
+
+  const hasGoogle = Boolean(ga4Id || ids.gtm || adsId);
   const hasMeta = Boolean(ids.metaPixel);
   const hasClarity = Boolean(ids.clarity);
   const isEnabled = hasGoogle || hasMeta || hasClarity;
 
-  const [consent, setConsent] = useState<Consent>(null);
-  const isInitialized = useRef(false);
-
-  // Recupera consentimento prévio do localStorage
-  useEffect(() => {
-    if (!isEnabled) return;
-    const stored = window.localStorage.getItem(CONSENT_STORAGE_KEY) as Consent;
-    if (stored === "accepted" || stored === "rejected") {
-      const timer = window.setTimeout(() => setConsent(stored), 0);
-      return () => window.clearTimeout(timer);
+  // Recupera consentimento prévio do localStorage de forma síncrona
+  const [consent, setConsent] = useState<Consent>(() => {
+    if (typeof window === "undefined") return null;
+    try {
+      const stored = window.localStorage.getItem(CONSENT_STORAGE_KEY) as Consent;
+      if (stored === "accepted" || stored === "rejected") return stored;
+    } catch {
+      // Ignora erro se localStorage for bloqueado
     }
-  }, [isEnabled]);
+    return null;
+  });
+
+  const isInitialized = useRef(false);
 
   // Inicialização das tags com Google Consent Mode v2 e Meta Pixel
   useEffect(() => {
@@ -214,7 +399,7 @@ export function TrackingProvider({ids}: {ids: TrackingIds}) {
     const target = window as AnalyticsWindow;
     const isAccepted = consent === "accepted";
 
-    // --- A. GOOGLE TAG MANAGER ---
+    // --- A. GOOGLE TAG MANAGER (SE HOUVER CONTAINER GTM) ---
     if (ids.gtm) {
       dataLayer().push({"gtm.start": Date.now(), event: "gtm.js"});
       loadScript(
@@ -224,33 +409,38 @@ export function TrackingProvider({ids}: {ids: TrackingIds}) {
     }
 
     // --- B. GOOGLE TAG (GA4 + GOOGLE ADS COM CONSENT MODE V2) ---
-    const measurementId = ids.ga4 ?? ids.googleAds;
-    if (measurementId) {
+    const primaryGoogleId = adsId ?? ga4Id;
+
+    if (primaryGoogleId) {
       target.gtag ??= (...args: unknown[]) => {
         dataLayer().push(args);
       };
 
-      // Google Consent Mode v2 - Garante conformidade com LGPD e permite modelagem do Google Ads
+      // Google Consent Mode v2 - Garante conformidade com LGPD e modelagem do Google Ads
       target.gtag("consent", "default", {
         analytics_storage: isAccepted ? "granted" : "denied",
-        ad_storage: isAccepted && ids.googleAds ? "granted" : "denied",
-        ad_user_data: isAccepted && ids.googleAds ? "granted" : "denied",
+        ad_storage: isAccepted && Boolean(adsId) ? "granted" : "denied",
+        ad_user_data: isAccepted && Boolean(adsId) ? "granted" : "denied",
         ad_personalization: "denied",
         wait_for_update: 500,
       });
 
       target.gtag("js", new Date());
+
+      // Carrega o script oficial do Google Tag Manager / gtag.js
       loadScript(
         "dra-sara-gtag",
-        `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`
+        `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(primaryGoogleId)}`
       );
 
-      // Configuração inicial do GA4 sem duplicar page_view automático
-      target.gtag("config", measurementId, {send_page_view: false});
+      // Configuração inicial do GA4 (sem page_view automático duplicado)
+      if (ga4Id) {
+        target.gtag("config", ga4Id, {send_page_view: false});
+      }
 
-      // Configuração do Google Ads Tag se for diferente do GA4
-      if (ids.googleAds && ids.googleAds !== measurementId) {
-        target.gtag("config", ids.googleAds);
+      // Configuração explícita do Google Ads Tag para reconhecimento no Tag Assistant e conversões
+      if (adsId) {
+        target.gtag("config", adsId);
       }
 
       // Função global recomendada pelo Google Ads para verificação e disparos diretos
@@ -261,10 +451,11 @@ export function TrackingProvider({ids}: {ids: TrackingIds}) {
           }
         };
 
-        if (target.gtag && ids.googleAds && ids.googleAdsConversionLabel) {
+        if (target.gtag && adsId && adsLabel) {
           target.gtag("event", "conversion", {
-            send_to: `${ids.googleAds}/${ids.googleAdsConversionLabel}`,
+            send_to: `${adsId}/${adsLabel}`,
             event_callback: callback,
+            transport_type: "beacon",
           });
         } else {
           callback();
@@ -296,7 +487,7 @@ export function TrackingProvider({ids}: {ids: TrackingIds}) {
       }
     }
 
-    // --- D. MICROSOFT CLARITY (OPCIONAL) ---
+    // --- D. MICROSOFT CLARITY ---
     if (ids.clarity) {
       if (!target.clarity) {
         const clarityStub = function (...args: unknown[]) {
@@ -307,7 +498,7 @@ export function TrackingProvider({ids}: {ids: TrackingIds}) {
       }
       loadScript("dra-sara-clarity", `https://www.clarity.ms/tag/${encodeURIComponent(ids.clarity)}`);
     }
-  }, [consent, ids, isEnabled]);
+  }, [adsId, adsLabel, consent, ga4Id, ids.clarity, ids.gtm, ids.metaPixel, isEnabled]);
 
   // Atualiza permissões do Consent Mode quando o usuário responde ao banner
   useEffect(() => {
@@ -317,8 +508,8 @@ export function TrackingProvider({ids}: {ids: TrackingIds}) {
     if (consent === "accepted") {
       target.gtag?.("consent", "update", {
         analytics_storage: "granted",
-        ad_storage: ids.googleAds ? "granted" : "denied",
-        ad_user_data: ids.googleAds ? "granted" : "denied",
+        ad_storage: adsId ? "granted" : "denied",
+        ad_user_data: adsId ? "granted" : "denied",
         ad_personalization: "denied",
       });
       target.fbq?.("consent", "grant");
@@ -331,7 +522,7 @@ export function TrackingProvider({ids}: {ids: TrackingIds}) {
       });
       target.fbq?.("consent", "revoke");
     }
-  }, [consent, ids.googleAds, isEnabled]);
+  }, [adsId, consent, isEnabled]);
 
   // Rastreamento automático de mudança de rota (SPA Pageviews) e visualizações de tratamento
   useEffect(() => {
@@ -355,22 +546,46 @@ export function TrackingProvider({ids}: {ids: TrackingIds}) {
     }
   }, [ids, isEnabled, pathname]);
 
-  // Delegação global de eventos de clique com marcação data-track-event
+  // Delegação global de eventos de clique: captura marcações manuais E intercepta links externos/contatos
   useEffect(() => {
     if (!isEnabled) return;
 
     function handleClick(event: MouseEvent) {
-      const element = (event.target as HTMLElement).closest<HTMLElement>("[data-track-event]");
-      if (!element?.dataset.trackEvent) return;
+      const targetEl = event.target as HTMLElement | null;
+      if (!targetEl) return;
 
-      sendEvent(
-        element.dataset.trackEvent,
-        {
-          cta_location: element.dataset.trackLocation,
-          treatment: element.dataset.treatment,
-        },
-        ids
-      );
+      const trackEl = targetEl.closest<HTMLElement>("[data-track-event]");
+      const anchorEl = targetEl.closest<HTMLAnchorElement>("a");
+
+      // 1. Elemento com marcação explícita de rastreamento
+      if (trackEl?.dataset.trackEvent) {
+        const outboundMeta = anchorEl ? detectOutboundLink(anchorEl) : null;
+        sendEvent(
+          trackEl.dataset.trackEvent,
+          {
+            cta_location: trackEl.dataset.trackLocation,
+            treatment: trackEl.dataset.treatment,
+            ...(outboundMeta ? outboundMeta.payload : {}),
+          },
+          ids
+        );
+        return;
+      }
+
+      // 2. Link âncora navegando para fora do site ou para canais de contato (WhatsApp, tel, mailto, mapa)
+      if (anchorEl) {
+        const detected = detectOutboundLink(anchorEl);
+        if (detected) {
+          sendEvent(
+            detected.event,
+            {
+              cta_location: anchorEl.dataset.trackLocation ?? "outbound_link",
+              ...detected.payload,
+            },
+            ids
+          );
+        }
+      }
     }
 
     document.addEventListener("click", handleClick);
@@ -381,7 +596,11 @@ export function TrackingProvider({ids}: {ids: TrackingIds}) {
   if (!isEnabled || consent !== null) return null;
 
   const handleConsent = (value: Exclude<Consent, null>) => {
-    window.localStorage.setItem(CONSENT_STORAGE_KEY, value);
+    try {
+      window.localStorage.setItem(CONSENT_STORAGE_KEY, value);
+    } catch {
+      // Ignora erro de storage
+    }
     setConsent(value);
   };
 
@@ -418,4 +637,3 @@ export function TrackingProvider({ids}: {ids: TrackingIds}) {
     </aside>
   );
 }
-
